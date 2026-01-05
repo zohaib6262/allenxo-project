@@ -1,0 +1,313 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ALLENXO Brand - Sage Green & Navy Theme */
+    --background: 210 35% 12%; /* #18283b - Dark Navy */
+    --foreground: 0 0% 98%;
+
+    --card: 210 30% 16%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 210 30% 16%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary: Sage Green brand color */
+    --primary: 145 25% 50%; /* #5e9c6c - Sage Green */
+    --primary-foreground: 210 35% 12%;
+
+    /* Secondary: Lighter navy */
+    --secondary: 210 28% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 25% 22%;
+    --muted-foreground: 210 15% 65%;
+
+    /* Accent: Brighter green for highlights */
+    --accent: 145 35% 55%; /* Lighter sage green */
+    --accent-foreground: 210 35% 12%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 25% 25%;
+    --input: 210 25% 25%;
+    --ring: 145 25% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom brand tokens */
+    --glow-primary: 145 25% 50%;
+    --gradient-start: 145 25% 50%; /* #5e9c6c */
+    --gradient-end: 145 35% 40%; /* Darker sage */
+
+    /* Network line color */
+    --network-line: 145 20% 35%;
+
+    --sidebar-background: 210 38% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 145 25% 50%;
+    --sidebar-primary-foreground: 210 35% 12%;
+    --sidebar-accent: 210 30% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 25% 25%;
+    --sidebar-ring: 145 25% 50%;
+  }
+
+  .dark {
+    --background: 210 35% 12%;
+    --foreground: 0 0% 98%;
+    --card: 210 30% 16%;
+    --card-foreground: 0 0% 98%;
+    --popover: 210 30% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 145 25% 50%;
+    --primary-foreground: 210 35% 12%;
+    --secondary: 210 28% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 210 25% 22%;
+    --muted-foreground: 210 15% 65%;
+    --accent: 145 35% 55%;
+    --accent-foreground: 210 35% 12%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 25% 25%;
+    --input: 210 25% 25%;
+    --ring: 145 25% 50%;
+    --sidebar-background: 210 38% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 145 25% 50%;
+    --sidebar-primary-foreground: 210 35% 12%;
+    --sidebar-accent: 210 30% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 25% 25%;
+    --sidebar-ring: 145 25% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Glowing button effect with sage green */
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.5),
+      0 0 60px hsl(var(--primary) / 0.3);
+  }
+
+  /* Network background pattern */
+  .network-bg {
+    background-image: radial-gradient(
+        circle at 20% 80%,
+        hsl(var(--primary) / 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        hsl(var(--accent) / 0.08) 0%,
+        transparent 50%
+      );
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-2;
+    box-shadow: 0 20px 40px hsl(var(--primary) / 0.15);
+  }
+
+  /* Text gradient - Sage green gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--accent))
+    );
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  /* Animated underline */
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary origin-right scale-x-0 transition-transform duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+
+  /* Badge styles */
+  .badge-tech {
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-secondary text-muted-foreground border border-border/50;
+  }
+
+  /* Network lines SVG background with sage green */
+  .network-lines {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20 L80 50 L40 80 L60 30 L20 60' stroke='%235e9c6c' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%235e9c6c' opacity='0.3'/%3E%3Ccircle cx='80' cy='50' r='2' fill='%235e9c6c' opacity='0.3'/%3E%3Ccircle cx='40' cy='80' r='2' fill='%235e9c6c' opacity='0.3'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  /* Fade in animation */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-delay-1 {
+    animation: fadeIn 0.6s ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeIn 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-3 {
+    animation: fadeIn 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  /* Marquee animation */
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee 30s linear infinite reverse;
+  }
+
+  /* Pulse glow with sage green */
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+  }
+}
+
+/* Direct color utilities for quick use */
+.bg-allenxo-green {
+  background-color: #5e9c6c;
+}
+
+.bg-allenxo-navy {
+  background-color: #18283b;
+}
+
+.text-allenxo-green {
+  color: #5e9c6c;
+}
+
+.text-allenxo-navy {
+  color: #18283b;
+}
+
+.border-allenxo-green {
+  border-color: #5e9c6c;
+}
+
+/* Gradient combinations */
+.bg-gradient-allenxo {
+  background: linear-gradient(135deg, #5e9c6c 0%, #4a7d56 100%);
+}
+
+.bg-gradient-allenxo-radial {
+  background: radial-gradient(circle at center, #5e9c6c 0%, #18283b 100%);
+}
