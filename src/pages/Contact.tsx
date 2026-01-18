@@ -33,21 +33,77 @@ const contactInfo = [
 export default function Contact() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // API کو call کریں
+      const response = await fetch(
+        "https://allenxo-backend.vercel.app/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
 
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
+      const data = await response.json();
 
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+      if (data.success) {
+        toast({
+          title: "✅ Message sent!",
+          description: "We'll get back to you as soon as possible.",
+        });
+
+        // Form reset کریں
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          company: "",
+          phone: "",
+          message: "",
+        });
+        (e.target as HTMLFormElement).reset();
+      } else {
+        toast({
+          title: "❌ Error",
+          description: data.message || "Failed to send message",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast({
+        title: "❌ Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -67,7 +123,8 @@ export default function Contact() {
               Get in <span className="text-gradient">Touch</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Ready to transform your business? Let's discuss how we can help you achieve your goals.
+              Ready to transform your business? Let's discuss how we can help
+              you achieve your goals.
             </p>
           </motion.div>
         </div>
@@ -97,6 +154,9 @@ export default function Contact() {
                         id="firstName"
                         placeholder="John"
                         required
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="bg-secondary border-border"
                       />
                     </div>
@@ -106,6 +166,9 @@ export default function Contact() {
                         id="lastName"
                         placeholder="Doe"
                         required
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="bg-secondary border-border"
                       />
                     </div>
@@ -118,6 +181,9 @@ export default function Contact() {
                       type="email"
                       placeholder="john@company.com"
                       required
+                      value={formData.email}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
                       className="bg-secondary border-border"
                     />
                   </div>
@@ -127,6 +193,22 @@ export default function Contact() {
                     <Input
                       id="company"
                       placeholder="Your Company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
+                      className="bg-secondary border-border"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
                       className="bg-secondary border-border"
                     />
                   </div>
@@ -138,6 +220,9 @@ export default function Contact() {
                       placeholder="Tell us about your project..."
                       rows={5}
                       required
+                      value={formData.message}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
                       className="bg-secondary border-border resize-none"
                     />
                   </div>
@@ -172,7 +257,9 @@ export default function Contact() {
                   Let's talk about your project
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Whether you have a specific project in mind or just want to explore possibilities, we're here to help. Our team will get back to you within 24 hours.
+                  Whether you have a specific project in mind or just want to
+                  explore possibilities, we're here to help. Our team will get
+                  back to you within 24 hours.
                 </p>
               </div>
 
@@ -187,8 +274,12 @@ export default function Contact() {
                       <item.icon className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <div className="text-sm text-muted-foreground">{item.title}</div>
-                      <div className="font-medium text-foreground">{item.value}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {item.title}
+                      </div>
+                      <div className="font-medium text-foreground">
+                        {item.value}
+                      </div>
                     </div>
                   </a>
                 ))}

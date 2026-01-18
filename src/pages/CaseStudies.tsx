@@ -27,6 +27,22 @@ const caseStudies = [
     tags: ["Automotive", "Custom Web"],
     href: "/case-studies/automotive",
   },
+  {
+    title: "Cosmetics E-Commerce Platform - Salipex Enterprises",
+    image: caseStudyAiEmail,
+    tags: ["Mobile App", "E-Commerce", "SaaS"],
+    description:
+      "Allnovo mobile application service base - mobile application used tested operation in United Kingdom",
+    href: "/case-studies/salipex-cosmetics",
+  },
+  {
+    title: "Mobile Application Service Base - Allnovo",
+    image: caseStudyAutomotive,
+    tags: ["Mobile App", "Service Platform", "Enterprise"],
+    description:
+      "Comprehensive mobile application service platform with tested operations across United Kingdom",
+    href: "/case-studies/allnovo-mobile",
+  },
 ];
 
 export default function CaseStudies() {
@@ -47,7 +63,9 @@ export default function CaseStudies() {
               Case <span className="text-gradient">Studies</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Explore how we've helped businesses transform their operations and achieve remarkable results through innovative technology solutions.
+              Explore how we've helped businesses transform their operations and
+              achieve remarkable results through innovative technology
+              solutions.
             </p>
           </motion.div>
         </div>
@@ -56,9 +74,14 @@ export default function CaseStudies() {
       {/* Case Studies Grid */}
       <section className="pb-20 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {caseStudies.map((study, index) => (
-              <CaseStudyCard key={study.title} {...study} index={index} />
+              <div
+                key={study.title}
+                className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+              >
+                <CaseStudyCard {...study} index={index} />
+              </div>
             ))}
           </div>
         </div>
